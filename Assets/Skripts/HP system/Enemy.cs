@@ -25,5 +25,19 @@ public class Enemy : MonoBehaviour
                 health.Heal(damageAmount);
             }
         }
+
+    }
+    private void OnTriggerEnter(Collider item)
+    {
+        // Проверяем, является ли объект игроком
+        if (item.CompareTag("Player"))
+        {
+            // Получаем компонент игрока 
+            Health health = item.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(damageAmount);
+            }
+        }
     }
 }

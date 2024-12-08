@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Ограничиваем здоровье
-        Debug.Log($"Восстановлено здоровье: {currentHealth}");
+        Debug.Log($"Текущее здоровье: {currentHealth}");
     }
 
     // Метод для обработки смерти
