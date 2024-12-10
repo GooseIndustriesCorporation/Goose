@@ -37,7 +37,6 @@ public class JumpGoose : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             lastJumpTime = Time.time;
         }
-        Debug.Log(onFloor);
         if (!onFloor && Input.GetButton("Jump") && rb.velocity.y < 0) // Медленное падение
         {
             rb.AddForce(Vector3.down / flyForce, ForceMode.Acceleration);
