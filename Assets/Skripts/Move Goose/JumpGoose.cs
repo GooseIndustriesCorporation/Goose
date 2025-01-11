@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class JumpGoose : MonoBehaviour
 {
-    private float jumpCooldown = 0.1f;
-    private float lastJumpTime = 0f;
+    //private float jumpCooldown = 0.1f;
+    //private float lastJumpTime = 0f;
     public float jumpForce = 5f; // Сила прыжка
     public float flyForce = 5f; // Ускорение падения
     private float lastRollTime = 0f; // Время последнего уворота
@@ -33,14 +33,16 @@ public class JumpGoose : MonoBehaviour
     void FixedUpdate()
     {
         if (Input.GetButtonDown("Jump") && onFloor) // Прыжок
-        {
+        {            
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        else if (Input.GetButtonDown("Jump") && onFloor && Time.time > lastJumpTime + jumpCooldown)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            lastJumpTime = Time.time;
-        }
+        if(rb.velocity.y > 5f)
+            rb.velocity = new Vector3(rb.velocity.x, 5f, rb.velocity.z);
+        //else if (Input.GetButtonDown("Jump") && onFloor && Time.time > lastJumpTime + jumpCooldown)
+        //{
+        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //    lastJumpTime = Time.time;
+        //}
         if (!onFloor && Input.GetButton("Jump") && rb.velocity.y < 0) // Медленное падение
         {
             rb.AddForce(Vector3.down / flyForce, ForceMode.Acceleration);
@@ -82,7 +84,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Если объект имеет тег "Floor", увеличиваем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
         {
             floorContacts++;
             onFloor = true; // Персонаж на земле, если хотя бы один контакт
@@ -93,7 +95,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         // Если объект имеет тег "Floor", уменьшаем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
         {
             floorContacts--;
             Debug.Log("Collision Exit with Floor. Contacts: " + floorContacts);
