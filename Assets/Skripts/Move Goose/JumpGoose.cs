@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class JumpGoose : MonoBehaviour
@@ -8,6 +9,9 @@ public class JumpGoose : MonoBehaviour
     private float lastJumpTime = 0f;
     public float jumpForce = 5f; // Сила прыжка
     public float flyForce = 5f; // Ускорение падения
+    private float lastRollTime = 0f; // Время последнего уворота
+    private float rollCooldown = 1f; // Время восстановления после уворота (переката)
+    public float rollingForce = 7f;
     private bool onFloor = false; // Проверка, находится ли объект на земле
     private Rigidbody rb;
     public Transform playerCamera; // Камера игрока (Cinemachine FreeLook)
@@ -26,7 +30,7 @@ public class JumpGoose : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetButtonDown("Jump") && onFloor) // Прыжок
         {
@@ -47,7 +51,30 @@ public class JumpGoose : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, -2f, rb.velocity.z);
             }
         }
+        // Механика уворота (перекат)
+        if (onFloor && Time.time > lastRollTime + rollCooldown) // Проверка cooldown
+        {
 
+            if (Input.GetKey(KeyCode.Q))
+            {
+                // Перекат вправо
+                gameObject.GetComponent<DraggingObj>().enabled = false;
+                gameObject.GetComponent<MouseRotation>().enabled = false;
+                Vector3 rollDirection = transform.right; // Направление влево относительно персонажа
+                rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
+                lastRollTime = Time.time; // Обновляем время последнего переката
+            }
+            else if (Input.GetKey(KeyCode.E))
+            {
+                // Перекат влево
+                gameObject.GetComponent<DraggingObj>().enabled = false;
+                gameObject.GetComponent<MouseRotation>().enabled = false;
+                Vector3 rollDirection = -transform.right; // Направление вправо относительно персонажа
+                rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
+                lastRollTime = Time.time; // Обновляем время последнего переката
+            }            
+        }
+        else if (Time.time > lastRollTime + 0.5f) gameObject.GetComponent<DraggingObj>().enabled = true;
     }
 
     private int floorContacts = 0; // Счетчик контактов с объектами Floor

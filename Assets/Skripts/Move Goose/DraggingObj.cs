@@ -33,7 +33,7 @@ public class DraggingObj : MonoBehaviour
     void Update()
     {
         // Устанавливаем флаги движения
-        if (Input.GetKeyDown(KeyCode.E) && objDrag && obj != null) // Назад
+        if (Input.GetKeyDown(KeyCode.F) && objDrag && obj != null) // Назад
         {
             isDragging = true;
             moveBackwards = true;
@@ -47,7 +47,7 @@ public class DraggingObj : MonoBehaviour
         }
 
         // Отпустить объект
-        if (Input.GetKeyUp(KeyCode.E) || Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.R))
         {
             isDragging = false;
             moveBackwards = false;
