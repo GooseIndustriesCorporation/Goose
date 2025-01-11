@@ -84,7 +84,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Если объект имеет тег "Floor", увеличиваем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
         {
             floorContacts++;
             onFloor = true; // Персонаж на земле, если хотя бы один контакт
@@ -95,7 +95,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         // Если объект имеет тег "Floor", уменьшаем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
         {
             floorContacts--;
             Debug.Log("Collision Exit with Floor. Contacts: " + floorContacts);

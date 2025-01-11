@@ -36,8 +36,7 @@ public class TakeAndDropWeapon : MonoBehaviour
     {
         Ray ray = playerCamera.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance))
-        {
-            Debug.Log($"Hit Object: {hit.collider.name}");
+        {            
             if (hit.collider.CompareTag(weaponTag))
             {
                 // Если наведённый объект отличается от текущего выделенного

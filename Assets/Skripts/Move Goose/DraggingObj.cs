@@ -15,8 +15,6 @@ public class DraggingObj : MonoBehaviour
     private bool isDragging = false; // Проверка, захвачен ли объект
     public Transform playerCamera;
     MouseRotation scriptToDisable;
-    
-
 
     void Start()
     {
