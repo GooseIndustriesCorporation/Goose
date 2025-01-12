@@ -31,7 +31,7 @@ public class JumpGoose : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetButtonDown("Jump") && onFloor) // Прыжок
+        if (Input.GetKey(KeyCode.Space) && onFloor) // Прыжок
         {            
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -42,7 +42,7 @@ public class JumpGoose : MonoBehaviour
         //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         //    lastJumpTime = Time.time;
         //}
-        if (!onFloor && Input.GetButton("Jump") && rb.velocity.y < 0) // Медленное падение
+        if (!onFloor && Input.GetKey(KeyCode.Space) && rb.velocity.y < 0) // Медленное падение
         {
             rb.AddForce(Vector3.down / flyForce, ForceMode.Acceleration);
 
