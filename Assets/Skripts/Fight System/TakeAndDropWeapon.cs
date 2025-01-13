@@ -8,7 +8,7 @@ public class TakeAndDropWeapon : MonoBehaviour
     public string weaponTag = "Weapon";
     public Material highlightMaterial;
     private Material originalMaterial;
-    public float rayDistanceFight = 4f;
+    public float rayDistanceFight = 1.5f;
     public int damageAmount = 10;
     public string targetTag = "Enemy";
     public float damageCooldown = 1f;
@@ -66,7 +66,7 @@ public class TakeAndDropWeapon : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    PickupWeapon(hit.collider.gameObject);
+                    PickupWeapon(hit.collider.gameObject, weaponHolder.GetComponent<Transform>());
                 }
             }
             else
@@ -112,11 +112,11 @@ public class TakeAndDropWeapon : MonoBehaviour
         }
     }
 
-    void PickupWeapon(GameObject weapon)
+    void PickupWeapon(GameObject weapon, Transform beak)
     {
         RestoreOriginalMaterial();
         currentWeapon = weapon;
-
+        
         Rigidbody rb = currentWeapon.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -129,6 +129,9 @@ public class TakeAndDropWeapon : MonoBehaviour
         {
             col.enabled = false;
         }
+
+
+        currentWeapon.transform.rotation = beak.rotation * Quaternion.Euler(90, 0, 0);
 
         currentWeapon.transform.SetParent(weaponHolder.transform);
         currentWeapon.transform.localPosition = Vector3.zero;

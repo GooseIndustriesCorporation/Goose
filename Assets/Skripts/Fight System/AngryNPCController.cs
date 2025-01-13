@@ -5,14 +5,17 @@ using System.Collections;
 public class AngryNPCController : MonoBehaviour
 {
     public Transform player;           // Ссылка на игрока
+    public Collider rb;
     public float visionRadius = 10f;   // Радиус видимости
-    public float visionAngle = 90f;    // Угол зрения
+    public float visionAngle = 180f;    // Угол зрения
     public float attackDistance = 1f;  // Расстояние для удара
     public float randomMoveRadius = 5f; // Радиус для случайного движения
-    public float attackDelay = 1f;     // Задержка перед атакой (сек)
+    public float attackDelay = 0.5f;     // Задержка перед атакой (сек)
     public float pauseDuration = 2f;   // Длительность паузы при рандомном движении
     public float minPauseTime = 1f;    // Минимальное время между остановками
     public float maxPauseTime = 3f;    // Максимальное время между остановками
+    public int damageAmount = 50;
+    private float lastDamageTime;
 
     private NavMeshAgent agent;        // Навигационный агент
     private bool isAttacking = false;  // Флаг атаки
@@ -22,6 +25,7 @@ public class AngryNPCController : MonoBehaviour
 
     void Start()
     {
+        rb = player.GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -32,11 +36,9 @@ public class AngryNPCController : MonoBehaviour
         Debug.DrawRay(transform.position, directionToPlayer.normalized * visionRadius, Color.red);
         if (distanceToPlayer < visionRadius)
         {
-            Debug.Log("Игрок в радиусе видимости.");
             float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
             if (angleToPlayer < visionAngle / 2)
             {
-                Debug.Log("Игрок в угле зрения.");
                 agent.destination = player.position;
                 //anim = agent.GetComponent<Animation>();
                 //anim.Play();
@@ -44,7 +46,7 @@ public class AngryNPCController : MonoBehaviour
             }
             if (distanceToPlayer < attackDistance && !isAttacking)
             {
-                StartCoroutine(AttackPlayer());
+                StartCoroutine(AttackPlayer(rb, player));
             }
         }
         else
@@ -65,16 +67,19 @@ public class AngryNPCController : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackPlayer()
+    private IEnumerator AttackPlayer(Collider col, Transform player)
     {
         isAttacking = true;
         agent.isStopped = true; // Останавливаем NPC перед атакой
-        Debug.Log("NPC останавливается и готовится атаковать...");
         
         yield return new WaitForSeconds(attackDelay); // Ожидаем 1 секунду
 
-        Debug.Log("NPC наносит удар по игроку!");       
-
+        Vector3 distance = player.position - transform.position;
+        float distanceToPlayer = distance.magnitude;
+        if (distanceToPlayer < attackDistance && isAttacking)
+        {
+            ApplyDamage(col);
+        }
         // Возвращаем NPC в движение
         agent.isStopped = false;
         isAttacking = false;
@@ -90,14 +95,27 @@ public class AngryNPCController : MonoBehaviour
             {
                 isPausing = true;
                 agent.isStopped = true;
-                Debug.Log("NPC остановился на месте...");
 
                 yield return new WaitForSeconds(pauseDuration); // Пауза
 
                 isPausing = false;
                 agent.isStopped = false;
-                Debug.Log("NPC продолжил движение...");
             }
+        }
+    }
+
+    private void ApplyDamage(Collider target)
+    {
+        // Пробуем получить компонент здоровья у объекта
+        Health health = target.GetComponent<Health>();
+        if (health != null)
+        {
+            health.TakeDamage(damageAmount);
+            lastDamageTime = Time.time; // Обновляем время нанесения урона
+        }
+        else
+        {
+            Debug.LogWarning($"Объект {target.name} не имеет компонента Health!");
         }
     }
 }
