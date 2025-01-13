@@ -46,9 +46,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -336,23 +336,23 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: skeletic@Standing Walk Forward(Clone)
+    - name: Anim_walk(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Mesh1
-      parentName: skeletic@Standing Walk Forward(Clone)
+      parentName: Anim_walk(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Mesh1.001
-      parentName: skeletic@Standing Walk Forward(Clone)
+      parentName: Anim_walk(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:Hips
-      parentName: skeletic@Standing Walk Forward(Clone)
+      parentName: Anim_walk(Clone)
       position: {x: -0.00011625789, y: 0.02350536, z: 0.000048589285}
       rotation: {x: -0.000000005820766, y: -0.000000023283064, z: -1.3552527e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
