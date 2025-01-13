@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class JumpGoose : MonoBehaviour
 {
@@ -32,10 +30,10 @@ public class JumpGoose : MonoBehaviour
     void FixedUpdate()
     {
         if (Input.GetButtonDown("Jump") && onFloor) // Прыжок
-        {            
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        if(rb.velocity.y > 5f)
+        if (rb.velocity.y > 5f)
             rb.velocity = new Vector3(rb.velocity.x, 5f, rb.velocity.z);
         //else if (Input.GetButtonDown("Jump") && onFloor && Time.time > lastJumpTime + jumpCooldown)
         //{
@@ -73,7 +71,7 @@ public class JumpGoose : MonoBehaviour
                 Vector3 rollDirection = -transform.right; // Направление вправо относительно персонажа
                 rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
                 lastRollTime = Time.time; // Обновляем время последнего переката
-            }            
+            }
         }
         else if (Time.time > lastRollTime + 0.5f) gameObject.GetComponent<DraggingObj>().enabled = true;
     }
