@@ -18,21 +18,18 @@ public class AngryNPCController : MonoBehaviour
     {
         Vector3 directionToPlayer = player.position - transform.position;
         float distanceToPlayer = directionToPlayer.magnitude;
-
+        Debug.DrawRay(transform.position, directionToPlayer.normalized * visionRadius, Color.red);
         if (distanceToPlayer < visionRadius)
         {
+            Debug.Log("Игрок в радиусе видимости.");
             float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-
             if (angleToPlayer < visionAngle / 2)
             {
-                // Проверка на препятствия
-                if (!Physics.Raycast(transform.position, directionToPlayer.normalized, distanceToPlayer))
-                {
-                    //Игрок виден, двигаться к нему
-                    agent.SetDestination(player.position);
-                    //anim = agent.GetComponent<Animation>();
-                    //anim.Play();
-                }
+                Debug.Log("Игрок в угле зрения.");
+                agent.destination = player.position;
+                //anim = agent.GetComponent<Animation>();
+                //anim.Play();
+
             }
         }
     }
