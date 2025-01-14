@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DraggingObj : MonoBehaviour
@@ -57,11 +55,11 @@ public class DraggingObj : MonoBehaviour
         scriptToDisable = gameObject.GetComponent<MouseRotation>();
         // Перемещение объекта с игроком
         if (isDragging && obj != null)
-        {            
+        {
             scriptToDisable.enabled = false;
             if (moveBackwards) // Перетаскивание объекта назад
             {
-                
+
                 obj.MovePosition(Vector3.Lerp(obj.position, rb.position, Time.fixedDeltaTime));
             }
             else if (moveForwards) // Перетаскивание объекта вперёд

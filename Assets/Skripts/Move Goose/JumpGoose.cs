@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class JumpGoose : MonoBehaviour
 {
@@ -31,18 +29,18 @@ public class JumpGoose : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space) && onFloor) // Прыжок
-        {            
+        if (Input.GetButtonDown("Jump") && onFloor) // Прыжок
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        if(rb.velocity.y > 5f)
+        if (rb.velocity.y > 5f)
             rb.velocity = new Vector3(rb.velocity.x, 5f, rb.velocity.z);
         //else if (Input.GetButtonDown("Jump") && onFloor && Time.time > lastJumpTime + jumpCooldown)
         //{
         //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         //    lastJumpTime = Time.time;
         //}
-        if (!onFloor && Input.GetKey(KeyCode.Space) && rb.velocity.y < 0) // Медленное падение
+        if (!onFloor && Input.GetButton("Jump") && rb.velocity.y < 0) // Медленное падение
         {
             rb.AddForce(Vector3.down / flyForce, ForceMode.Acceleration);
 
@@ -73,7 +71,7 @@ public class JumpGoose : MonoBehaviour
                 Vector3 rollDirection = -transform.right; // Направление вправо относительно персонажа
                 rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
                 lastRollTime = Time.time; // Обновляем время последнего переката
-            }            
+            }
         }
         else if (Time.time > lastRollTime + 0.5f) gameObject.GetComponent<DraggingObj>().enabled = true;
     }
@@ -83,7 +81,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Если объект имеет тег "Floor", увеличиваем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
         {
             floorContacts++;
             onFloor = true; // Персонаж на земле, если хотя бы один контакт
@@ -94,7 +92,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         // Если объект имеет тег "Floor", уменьшаем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
         {
             floorContacts--;
             Debug.Log("Collision Exit with Floor. Contacts: " + floorContacts);
