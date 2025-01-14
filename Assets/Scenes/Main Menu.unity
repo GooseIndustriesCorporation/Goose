@@ -288,11 +288,11 @@ RectTransform:
   m_Children:
   - {fileID: 1076033609}
   - {fileID: 1218829354}
-  m_Father: {fileID: 260808446}
+  m_Father: {fileID: 1176432569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 97.26807, y: -152.79173}
+  m_AnchoredPosition: {x: 92.26807, y: -152.79173}
   m_SizeDelta: {x: -833.4466, y: -376.269}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &248640363
@@ -363,7 +363,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 248640362}
   - {fileID: 379384002}
   m_Father: {fileID: 1176432569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -813,7 +812,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -951,6 +950,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 260808446}
+  - {fileID: 248640362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

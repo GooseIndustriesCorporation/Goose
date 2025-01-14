@@ -33,8 +33,8 @@ public class JumpGoose : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        if (rb.velocity.y > 5f)
-            rb.velocity = new Vector3(rb.velocity.x, 5f, rb.velocity.z);
+        if (rb.velocity.y > 8)
+            rb.velocity = new Vector3(rb.velocity.x, 8f, rb.velocity.z);
         //else if (Input.GetButtonDown("Jump") && onFloor && Time.time > lastJumpTime + jumpCooldown)
         //{
         //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -81,7 +81,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Если объект имеет тег "Floor", увеличиваем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject"))
         {
             floorContacts++;
             onFloor = true; // Персонаж на земле, если хотя бы один контакт
@@ -92,7 +92,7 @@ public class JumpGoose : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         // Если объект имеет тег "Floor", уменьшаем счетчик контактов
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject") || collision.gameObject.CompareTag("Weapon"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("DraggingObject"))
         {
             floorContacts--;
             Debug.Log("Collision Exit with Floor. Contacts: " + floorContacts);
