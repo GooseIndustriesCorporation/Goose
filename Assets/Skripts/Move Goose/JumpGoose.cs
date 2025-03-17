@@ -33,8 +33,8 @@ public class JumpGoose : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        if (rb.velocity.y > 8)
-            rb.velocity = new Vector3(rb.velocity.x, 8f, rb.velocity.z);
+        if (rb.velocity.y > 4)
+            rb.velocity = new Vector3(rb.velocity.x, 4f, rb.velocity.z);
         if (!onFloor && Input.GetButton("Jump") && rb.velocity.y < 0) // Медленное падение
         {
             rb.AddForce(Vector3.down / flyForce, ForceMode.Acceleration);
