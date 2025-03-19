@@ -37,7 +37,7 @@ public class TakeAndDropWeapon : MonoBehaviour
         }
         Debug.DrawRay(FCPplayerCamera.transform.position, FCPplayerCamera.transform.forward * rayDistanceFight, Color.red);
         if (isHoldingWeapon)
-        {            
+        {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 DropWeapon();
@@ -54,7 +54,7 @@ public class TakeAndDropWeapon : MonoBehaviour
     {
         Ray ray = FCPplayerCamera.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance))
-        {            
+        {
             if (hit.collider.CompareTag(weaponTag))
             {
                 // Если наведённый объект отличается от текущего выделенного

@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class JumpGoose : MonoBehaviour
 {
     //private float jumpCooldown = 0.1f;
     //private float lastJumpTime = 0f;
-    public float jumpForce = 5f; // Сила прыжка
+    public float jumpForce; // Сила прыжка
     public float flyForce = 5f; // Ускорение падения
     private float lastRollTime = 0f; // Время последнего уворота
     private float rollCooldown = 1f; // Время восстановления после уворота (переката)
@@ -31,18 +29,13 @@ public class JumpGoose : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space) && onFloor) // Прыжок
-        {            
+        if (Input.GetButtonDown("Jump") && onFloor) // Прыжок
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        if(rb.velocity.y > 5f)
-            rb.velocity = new Vector3(rb.velocity.x, 5f, rb.velocity.z);
-        //else if (Input.GetButtonDown("Jump") && onFloor && Time.time > lastJumpTime + jumpCooldown)
-        //{
-        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        //    lastJumpTime = Time.time;
-        //}
-        if (!onFloor && Input.GetKey(KeyCode.Space) && rb.velocity.y < 0) // Медленное падение
+        if (rb.velocity.y > 4)
+            rb.velocity = new Vector3(rb.velocity.x, 4f, rb.velocity.z);
+        if (!onFloor && Input.GetButton("Jump") && rb.velocity.y < 0) // Медленное падение
         {
             rb.AddForce(Vector3.down / flyForce, ForceMode.Acceleration);
 
@@ -73,7 +66,7 @@ public class JumpGoose : MonoBehaviour
                 Vector3 rollDirection = -transform.right; // Направление вправо относительно персонажа
                 rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
                 lastRollTime = Time.time; // Обновляем время последнего переката
-            }            
+            }
         }
         else if (Time.time > lastRollTime + 0.5f) gameObject.GetComponent<DraggingObj>().enabled = true;
     }
