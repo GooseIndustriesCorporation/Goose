@@ -7,13 +7,13 @@ public class AngryNPCController : MonoBehaviour
     public Transform player;           // Ссылка на игрока
     public Collider rb;                // Коллайдер игрока
     public float visionRadius = 10f;   // Радиус видимости NPC
-    public float visionAngle = 180f;   // Угол обзора NPC
+    public float visionAngle = 360f;   // Угол обзора NPC
     public float attackDistance = 1.5f; // Расстояние для атаки
     public float randomMoveRadius = 5f; // Радиус случайного движения
     public float attackDelay = 0.5f;   // Задержка перед атакой (секунды)
     public float pauseDuration = 2f;   // Длительность паузы во время случайного движения
-    public float minPauseTime = 1f;    // Минимальное время между случайными движениями
-    public float maxPauseTime = 3f;    // Максимальное время между случайными движениями
+    public float minPauseTime = 5f;    // Минимальное время между случайными движениями
+    public float maxPauseTime = 10f;    // Максимальное время между случайными движениями
     public int damageAmount = 50;      // Количество урона, наносимого игроку
     public int health = 100;           // Здоровье NPC
 
@@ -68,7 +68,7 @@ public class AngryNPCController : MonoBehaviour
     private bool IsPlayerVisible(Vector3 directionToPlayer)
     {
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-        if (angleToPlayer < visionAngle / 2) // Если игрок в поле зрения
+        if (angleToPlayer < visionAngle) // Если игрок в поле зрения
         {
             // Проверяем препятствия через Raycast
             if (Physics.Raycast(transform.position, directionToPlayer.normalized, out RaycastHit hit, visionRadius))

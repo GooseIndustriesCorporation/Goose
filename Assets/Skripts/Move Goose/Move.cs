@@ -3,7 +3,6 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public float speed = 10f; // Скорость движения
-    public float jumpForce = 5f; // Сила прыжка
     private bool onFloor = false; // Проверка, находится ли объект на земле
     private Rigidbody rb;
     public Transform playerCamera; // Камера игрока (Cinemachine FreeLook)
