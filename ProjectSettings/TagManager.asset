@@ -8,6 +8,8 @@ TagManager:
   - DraggingObject
   - Weapon
   - Enemy
+  - Collectible
+  - interactable
   layers:
   - Default
   - TransparentFX
