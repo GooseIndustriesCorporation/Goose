@@ -585,7 +585,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 61.517452
+      value: 59.23
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -593,7 +593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 102.73001
+      value: 126.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -624,8 +624,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 919132149155446097, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
       propertyPath: m_Name
       value: Portal_Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 301a1c5ec1c49d04c859fe30d71d73a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12188,7 +12196,7 @@ Transform:
   m_GameObject: {fileID: 1866260119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 64.04198, y: 1.736417, z: 60.42421}
+  m_LocalPosition: {x: 61.821, y: 1.736417, z: 105.498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
