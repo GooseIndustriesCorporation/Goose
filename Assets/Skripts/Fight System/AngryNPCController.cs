@@ -25,6 +25,7 @@ public class AngryNPCController : MonoBehaviour
     private float nextAttackTime = 0f; // Время для следующей атаки
     private bool isDead = false;       // Флаг смерти
 
+    public GameObject portal;
     void Start()
     {
         // Инициализация компонентов
@@ -38,7 +39,11 @@ public class AngryNPCController : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return; // Если NPC мёртв, ничего не выполняется
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TakeDamage(20);
+        }
+        if (isDead) portal.SetActive(true); // Если NPC мёртв, ничего не выполняется
 
         // Определяем направление и расстояние до игрока
         Vector3 directionToPlayer = player.position - transform.position;
