@@ -6380,7 +6380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4043715b0cca6d4ab0c28cc3a831098, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 65.27
+      value: 64.68
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4043715b0cca6d4ab0c28cc3a831098, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6388,7 +6388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4043715b0cca6d4ab0c28cc3a831098, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 59.83
+      value: 59.954
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c4043715b0cca6d4ab0c28cc3a831098, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6764,8 +6764,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToCollect: 3
-  endDial: 0
-  _dialogue: {fileID: 0}
 --- !u!135 &1050702029
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9040,7 +9038,7 @@ Transform:
   m_GameObject: {fileID: 1431521519}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 65.27, y: 4.75, z: 59.83}
+  m_LocalPosition: {x: 64.68, y: 4.75, z: 59.954}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9425,7 +9423,7 @@ Transform:
   m_GameObject: {fileID: 1464297828}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6958757, y: 0, z: 0, w: 0.71816236}
-  m_LocalPosition: {x: 65.27, y: 4.75, z: 59.83}
+  m_LocalPosition: {x: 64.68, y: 4.75, z: 59.954}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13216,3 +13214,4 @@ SceneRoots:
   - {fileID: 1435680791}
   - {fileID: 1841431515}
   - {fileID: 150933893}
+  - {fileID: 1050702030}
