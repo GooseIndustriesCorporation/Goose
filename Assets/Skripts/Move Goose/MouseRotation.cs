@@ -4,7 +4,7 @@ public class MouseRotation : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform playerCamera;
-    public float rotationSpeed = 20f;
+    public float rotationSpeed = 5f;
     // Start is called before the first frame update
     void Start()
     {
