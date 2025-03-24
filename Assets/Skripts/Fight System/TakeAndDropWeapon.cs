@@ -27,7 +27,7 @@ public class TakeAndDropWeapon : MonoBehaviour
         {
             if (hit.collider.CompareTag(targetTag))
             {
-               // Debug.Log($"isHoldingWeapon - {isHoldingWeapon}");
+                Debug.Log($"isHoldingWeapon - {isHoldingWeapon}");
 
                 if (isHoldingWeapon && Input.GetMouseButtonDown(0) && Time.time >= lastDamageTime + damageCooldown)
                 {
@@ -47,7 +47,7 @@ public class TakeAndDropWeapon : MonoBehaviour
         {
             CheckForWeaponPickup();
         }
-       // Debug.Log($"isHoldingWeapon(TAD) - {isHoldingWeapon}");
+        Debug.Log($"isHoldingWeapon(TAD) - {isHoldingWeapon}");
     }
 
     void CheckForWeaponPickup()

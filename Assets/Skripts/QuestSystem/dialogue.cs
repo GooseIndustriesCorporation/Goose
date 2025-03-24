@@ -11,14 +11,13 @@ public class dialogue: MonoBehaviour
     
     public int index;
 
-    //void Start()
-    //{
-    //     dialogueText.text = string.Empty;
-    //     //StartDialogue();
+    void Start()
+    {
+         dialogueText.text = string.Empty;
+         StartDialogue();
+    }
 
-    //}
-
-    public void StartDialogue()
+   public void StartDialogue()
     {
         index = 0;
         dialogueText.text = string.Empty;
