@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class npcTrigger : MonoBehaviour
 {
-    public  dialogue dialogueScript; 
-    public GameObject dialogueUI;
+    public  dialogue dialogueScript1; 
+    public GameObject dialogueUI1;
     public bool trigger = false;
     private void OnTriggerEnter(Collider other)
     {
@@ -13,8 +13,8 @@ public class npcTrigger : MonoBehaviour
         if (other.CompareTag("Player") && trigger == false)
         {
 
-            dialogueUI.SetActive(true); 
-            dialogueScript.StartDialogue();
+            dialogueUI1.SetActive(true); 
+            dialogueScript1.StartDialogue();
             trigger = true;
         }
     }
@@ -23,8 +23,9 @@ public class npcTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (dialogueUI.activeInHierarchy) dialogueUI.SetActive(false);
-           // dialogueScript.gameObject.SetActive(false);
+            if (dialogueUI1.activeInHierarchy) dialogueUI1.SetActive(false);
         }
     }
+
+
 }
