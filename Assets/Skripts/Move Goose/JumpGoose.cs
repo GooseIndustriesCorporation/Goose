@@ -49,22 +49,22 @@ public class JumpGoose : MonoBehaviour
         if (onFloor && Time.time > lastRollTime + rollCooldown) // Проверка cooldown
         {
 
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 // Перекат вправо
                 gameObject.GetComponent<DraggingObj>().enabled = false;
                 gameObject.GetComponent<MouseRotation>().enabled = false;
-                Vector3 rollDirection = transform.right; // Направление влево относительно персонажа
-                rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
+                Vector3 rollDirection = -transform.forward; // Направление влево относительно персонажа
+                rb.AddForce(rollDirection * rollingForce, ForceMode.VelocityChange);
                 lastRollTime = Time.time; // Обновляем время последнего переката
             }
-            else if (Input.GetKey(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 // Перекат влево
                 gameObject.GetComponent<DraggingObj>().enabled = false;
                 gameObject.GetComponent<MouseRotation>().enabled = false;
-                Vector3 rollDirection = -transform.right; // Направление вправо относительно персонажа
-                rb.AddForce(rollDirection * rollingForce, ForceMode.Impulse);
+                Vector3 rollDirection = transform.forward; // Направление вправо относительно персонажа
+                rb.AddForce(rollDirection * rollingForce, ForceMode.VelocityChange);
                 lastRollTime = Time.time; // Обновляем время последнего переката
             }
         }

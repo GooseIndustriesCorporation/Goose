@@ -30,7 +30,7 @@ public class MouseRotation : MonoBehaviour
         targetRotation.z = 0;
 
         // Разворачиваем на 180 градусов по оси Y
-        targetRotation *= Quaternion.Euler(0, 180, 0);
+        targetRotation *= Quaternion.Euler(0, 90, 90);
         // Сглаживаем движение с помощью Slerp
         Quaternion smoothedRotation = Quaternion.Slerp(
             rb.rotation,        // Текущая ориентация объекта
