@@ -4972,7 +4972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc9f458d1b48d814fa1616e80c234929, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 61.57
+      value: 61.608
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc9f458d1b48d814fa1616e80c234929, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6833,16 +6833,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c76184672c3b67408e3aeafa0856a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  rotationSpeed: 10
-  jumpForce: 5
+  moveSpeed: 2
+  jumpForce: 1
   gravity: -9.81
-  groundCheckDistance: 0.2
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 1155089255}
+  rotationSmoothTime: 0.3
 --- !u!65 &1137896257
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7011,7 +7010,7 @@ Transform:
   m_GameObject: {fileID: 1155089254}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0034, y: -0.0132, z: 0}
+  m_LocalPosition: {x: 0.0025, y: -0.0018, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8907,7 +8906,7 @@ Transform:
   m_GameObject: {fileID: 1431521519}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 61.57, y: 2.177, z: 99.496}
+  m_LocalPosition: {x: 61.608, y: 2.177, z: 99.496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9292,7 +9291,7 @@ Transform:
   m_GameObject: {fileID: 1464297828}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14460684, y: -0.00000002775022, z: 0.0000000040554977, w: 0.98948926}
-  m_LocalPosition: {x: 61.57, y: 2.177, z: 99.496}
+  m_LocalPosition: {x: 61.608, y: 2.177, z: 99.496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
