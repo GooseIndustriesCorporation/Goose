@@ -2,47 +2,88 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    public float speed = 10f; // Скорость движения
-    private bool onFloor = false; // Проверка, находится ли объект на земле
-    private Rigidbody rb;
-    public Transform playerCamera; // Камера игрока (Cinemachine FreeLook)
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] private LayerMask groundMask; // Назначайте в инспекторе
+
+    private CharacterController controller;
+    private Vector3 velocity;
+    private float rotationVelocity;
+    private bool isGrounded;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Заморозить вращение объекта
+        controller = GetComponent<CharacterController>();
 
-        // Проверяем, привязана ли камера
-        if (playerCamera == null)
+        // Убедитесь, что groundMask назначен в инспекторе
+        if (groundMask.value == 0)
         {
-            Debug.LogError("Player Camera не привязана! Укажите её в инспекторе.");
+            Debug.LogError("Ground Mask не назначен! Назначьте слой земли в инспекторе.");
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        // Проверка на землю через Physics.Raycast
-        onFloor = Physics.Raycast(transform.position, Vector3.down, 0.6f);
+        // Проверка на землю
+        isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, controller.height / 2, 0),
+                                      groundCheckDistance,
+                                      groundMask);
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        HandleMovement();
+        HandleJump();
+        ApplyGravity();
+    }
 
-        if (playerCamera == null)
+    private void HandleMovement()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 moveDirection = new Vector3(horizontal, 0, vertical).normalized;
+
+        if (moveDirection.magnitude >= 0.1f)
         {
-            Debug.LogWarning("Player Camera не указана! Движение невозможно.");
-            return;
+            // Поворот относительно камеры
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationVelocity, 0.1f);
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+
+            // Движение (только по X и Z)
+            Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+            controller.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
+        }
+    }
+
+    private void HandleJump()
+    {
+        if (isGrounded)
+        {
+            // Сброс вертикальной скорости при нахождении на земле
+            if (velocity.y < 0)
+            {
+                velocity.y = -0.5f; // Небольшое отрицательное значение для "прижатия" к земле
+            }
+
+            // Прыжок
+            if (Input.GetButtonDown("Jump"))
+            {
+                velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            }
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        if (!isGrounded)
+        {
+            velocity.y += gravity * Time.deltaTime;
         }
 
-        Vector3 forward = playerCamera.forward;
-        forward.y = 0;
-        forward.Normalize();
-
-        Vector3 right = playerCamera.right;
-        right.y = 0;
-        right.Normalize();
-
-        Vector3 movement = (forward * v + right * h).normalized * speed * (Time.fixedDeltaTime / 4);
-        Vector3 newPosition = rb.position + movement;
-        rb.MovePosition(newPosition);
+        // Применяем вертикальное движение (прыжок/гравитация)
+        controller.Move(velocity * Time.deltaTime);
     }
 }
