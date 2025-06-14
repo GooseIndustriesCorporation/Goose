@@ -3,35 +3,34 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float rotationSpeed = 10f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float jumpForce = 1f;
     [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] private float groundCheckRadius = 0.5f;
     [SerializeField] private LayerMask groundMask; // Назначайте в инспекторе
+    [SerializeField] private Transform groundCheck; // Создайте пустой GameObject в ногах персонажа
 
     private CharacterController controller;
     private Vector3 velocity;
     private float rotationVelocity;
     private bool isGrounded;
 
+    [SerializeField] private float rotationSmoothTime = 0.5f;
+    private Vector3 currentMoveDirection;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
 
-        // Убедитесь, что groundMask назначен в инспекторе
-        if (groundMask.value == 0)
-        {
-            Debug.LogError("Ground Mask не назначен! Назначьте слой земли в инспекторе.");
-        }
+        if (!groundCheck)
+            Debug.LogError("Ground Check transform not assigned!");
     }
 
     void Update()
     {
-        // Проверка на землю
-        isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, controller.height / 2, 0),
-                                      groundCheckDistance,
-                                      groundMask);
+        // Улучшенная проверка земли с визуализацией
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
+        Debug.DrawRay(groundCheck.position, Vector3.down * groundCheckRadius, isGrounded ? Color.green : Color.red);
 
         HandleMovement();
         HandleJump();
@@ -43,47 +42,58 @@ public class Move : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 moveDirection = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+        cameraForward.Normalize();
+        cameraRight.Normalize();
 
-        if (moveDirection.magnitude >= 0.1f)
+        Vector3 targetDirection = cameraForward * vertical + cameraRight * horizontal;
+
+        if (targetDirection.magnitude > 0.1f)
         {
-            // Поворот относительно камеры
-            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationVelocity, 0.1f);
+            // Плавное изменение текущего направления
+            currentMoveDirection = Vector3.Slerp(currentMoveDirection, targetDirection, rotationSmoothTime * Time.deltaTime * 100f);
+            currentMoveDirection.Normalize();
+
+            // Плавный поворот персонажа
+            float targetAngle = Mathf.Atan2(currentMoveDirection.x, currentMoveDirection.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
-            // Движение (только по X и Z)
-            Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-            controller.Move(moveDir.normalized * moveSpeed * Time.deltaTime);
+            // Движение
+            controller.Move(currentMoveDirection * moveSpeed * Time.deltaTime);
         }
     }
 
     private void HandleJump()
     {
-        if (isGrounded)
+        if (isGrounded && velocity.y < 0)
         {
-            // Сброс вертикальной скорости при нахождении на земле
-            if (velocity.y < 0)
-            {
-                velocity.y = -0.5f; // Небольшое отрицательное значение для "прижатия" к земле
-            }
+            velocity.y = -2f; // "Прижимаем" к земле
+        }
 
-            // Прыжок
-            if (Input.GetButtonDown("Jump"))
-            {
-                velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-            }
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            Debug.Log("Jump velocity: " + velocity.y);
         }
     }
 
     private void ApplyGravity()
     {
-        if (!isGrounded)
-        {
-            velocity.y += gravity * Time.deltaTime;
-        }
-
-        // Применяем вертикальное движение (прыжок/гравитация)
+        velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    // Визуализация сферы проверки земли
+    private void OnDrawGizmos()
+    {
+        if (groundCheck)
+        {
+            Gizmos.color = isGrounded ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
     }
 }

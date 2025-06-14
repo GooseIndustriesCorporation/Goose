@@ -5,18 +5,18 @@ public class DraggingObj : MonoBehaviour
     public float forceGoose = 5f;
     private bool moveBackwards = false; // Флаг движения назад
     private bool moveForwards = false; // Флаг движения вперёд
-    private Rigidbody rb; // Rigidbody игрока
+    private CharacterController characterController; // Character Controller игрока
     private Rigidbody obj; // Rigidbody перетаскиваемого объекта
     public float followDistance = 2f; // Расстояние между игроком и объектом
     private bool objDrag = false; // Проверка, можно ли перетащить объект
     private bool isDragging = false; // Проверка, захвачен ли объект
     public Transform playerCamera;
-    MouseRotation scriptToDisable;
+    //MouseRotation scriptToDisable;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Заморозить вращение игрока
+        characterController = GetComponent<CharacterController>();
+        //scriptToDisable = GetComponent<MouseRotation>();
 
         // Проверяем, привязана ли камера
         if (playerCamera == null)
@@ -52,39 +52,44 @@ public class DraggingObj : MonoBehaviour
 
     void FixedUpdate()
     {
-        scriptToDisable = gameObject.GetComponent<MouseRotation>();
         // Перемещение объекта с игроком
         if (isDragging && obj != null)
         {
-            scriptToDisable.enabled = false;
+            //scriptToDisable.enabled = false;
+
             if (moveBackwards) // Перетаскивание объекта назад
             {
-
-                obj.MovePosition(Vector3.Lerp(obj.position, rb.position, Time.fixedDeltaTime));
+                // Позиция за игроком
+                Vector3 targetPosition = transform.position - transform.forward * followDistance;
+                obj.MovePosition(Vector3.Lerp(obj.position, targetPosition, forceGoose * Time.fixedDeltaTime));
             }
             else if (moveForwards) // Перетаскивание объекта вперёд
             {
-                obj.MovePosition(Vector3.MoveTowards(obj.position, transform.position - transform.forward * followDistance, forceGoose * Time.fixedDeltaTime));
+                // Позиция перед игроком
+                Vector3 targetPosition = transform.position + transform.forward * followDistance;
+                obj.MovePosition(Vector3.MoveTowards(obj.position, targetPosition, forceGoose * Time.fixedDeltaTime));
             }
         }
         else
-            scriptToDisable.enabled = true;
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        // Если объект имеет тег "DraggingObject", разрешаем его перетаскивание
-        if (collision.gameObject.CompareTag("DraggingObject"))
         {
-            objDrag = true;
-            obj = collision.rigidbody; // Сохраняем Rigidbody объекта
+            //scriptToDisable.enabled = true;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Если объект имеет тег "DraggingObject", разрешаем его перетаскивание
+        if (hit.gameObject.CompareTag("DraggingObject"))
+        {
+            objDrag = true;
+            obj = hit.collider.attachedRigidbody; // Сохраняем Rigidbody объекта
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
     {
         // Когда объект выходит из зоны взаимодействия, сбрасываем флаги
-        if (collision.gameObject.CompareTag("DraggingObject"))
+        if (other.gameObject.CompareTag("DraggingObject"))
         {
             objDrag = false;
             obj = null;
